@@ -3,58 +3,49 @@
 </script>
 
 <style>
-	nav {
-		border-bottom: 1px solid rgba(255,62,0,0.1);
-		font-weight: 300;
-		padding: 0 1em;
-	}
 
-	ul {
-		margin: 0;
-		padding: 0;
-	}
-
-	/* clearfix */
-	ul::after {
-		content: '';
-		display: block;
-		clear: both;
-	}
-
-	li {
-		display: block;
-		float: left;
-	}
-
-	.selected {
-		position: relative;
-		display: inline-block;
-	}
-
-	.selected::after {
-		position: absolute;
-		content: '';
-		width: calc(100% - 1em);
-		height: 2px;
-		background-color: rgb(255,62,0);
-		display: block;
-		bottom: -1px;
-	}
-
-	a {
-		text-decoration: none;
-		padding: 1em 0.5em;
-		display: block;
-	}
 </style>
 
-<nav>
-	<ul>
-		<li><a class:selected='{segment === undefined}' href='.'>home</a></li>
-		<li><a class:selected='{segment === "about"}' href='about'>about</a></li>
 
-		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
-		     the blog data when we hover over the link or tap it on a touchscreen -->
-		<li><a rel=prefetch class:selected='{segment === "blog"}' href='blog'>blog</a></li>
-	</ul>
-</nav>
+<nav class="navbar navbar-expand-lg navbar-dark primary-color">
+
+                  <!-- Navbar brand -->
+                  <a class="navbar-brand" href=".">Awesome Sapper</a>
+
+                  <!-- Collapse button -->
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+
+                  <!-- Collapsible content -->
+                  <div class="collapse navbar-collapse" id="basicExampleNav">
+
+                      <!-- Links -->
+                      <ul class="navbar-nav mr-auto">
+                          <li class:active='{segment === undefined}' class="nav-item">
+                              <a class="nav-link waves-effect waves-light" href='.'>Home
+                                  <span class="sr-only">(current)</span>
+                              </a>
+                          </li>
+                          <li class:active='{segment === "about"}' class="nav-item">
+                              <a class="nav-link waves-effect waves-light" href='about'>About</a>
+                          </li>
+                          <li class:active='{segment === "map"}' class="nav-item">
+                              <a class="nav-link waves-effect waves-light" href="map">map</a>
+                          </li>
+                          <li class:active='{segment === "blog"}' class="nav-item">
+                              <a rel=prefetch  class="nav-link waves-effect waves-light" href="blog">blog</a>
+                          </li>
+
+                      </ul>
+                      <!-- Links -->
+
+                      <form class="form-inline">
+                          <div class="md-form my-0">
+                              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                          </div>
+                      </form>
+                  </div>
+                  <!-- Collapsible content -->
+
+              </nav>

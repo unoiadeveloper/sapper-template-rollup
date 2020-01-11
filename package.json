@@ -12,7 +12,9 @@
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
+    "clsx": "^1.0.4",
     "compression": "^1.7.1",
+    "mdbootstrap": "^4.11.0",
     "polka": "next",
     "sirv": "^0.4.0"
   },
