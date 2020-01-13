@@ -2,9 +2,11 @@
   import { Input, Row, Col } from '../components/ui'
   import Map from '../components/Map.svelte'
   import Geocoder from '../components/Geocoder.svelte'
+  import { getDistanceFromLatLonInKm, getNearest } from '../services/utils.js'
 
   let shippingMarker = null
   let destinationMarker = null
+  let overviewPath
 
   const directionsService = new google.maps.DirectionsService()
   const directionsRenderer = new google.maps.DirectionsRenderer()
@@ -19,7 +21,7 @@
     if (type == 'destination') setDestinationMarker(map, place)
 
     if (shippingMarker && destinationMarker) {
-      console.log(shippingMarker.title)
+      console.log(shippingMarker.position)
       calculateAndDisplayRoute(
         map,
         shippingMarker.title,
@@ -83,6 +85,7 @@
       function(response, status) {
         if (status === 'OK') {
           console.log(response)
+          overviewPath = response.routes[0].overview_path
           directionsRenderer.setDirections(response)
         } else {
           window.alert('Directions request failed due to ' + status)
@@ -91,6 +94,26 @@
     )
     directionsRenderer.setMap(map)
     clearAllMarkers()
+  }
+
+  const handleSubmit = () => {
+    let map = window.gmap
+    let sp = {
+      lat: shippingMarker.position.lat(),
+      lng: shippingMarker.position.lng(),
+    }
+    let dp = {
+      lat: destinationMarker.position.lat(),
+      lng: destinationMarker.position.lng(),
+    }
+    let totalDistance = getDistanceFromLatLonInKm(sp, dp)
+    let centerPoint = getNearest(overviewPath, totalDistance / 3, sp)
+    console.log(centerPoint)
+    let nm = new google.maps.Marker({
+      position: centerPoint,
+      title: 'chl oye',
+    })
+    nm.setMap(map)
   }
 </script>
 
@@ -183,7 +206,10 @@
         <!--Grid row-->
         <br />
 
-        <button type="button" class="btn btn-primary waves-effect btn-md">
+        <button
+          type="button"
+          on:click={handleSubmit}
+          class="btn btn-primary waves-effect btn-md">
           Submit
         </button>
         <button type="button" class="btn btn-indigo waves-effect btn-md">

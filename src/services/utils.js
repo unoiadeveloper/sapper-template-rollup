@@ -28,8 +28,8 @@ const deg2rad = (deg) => {
 
 const getNearest = (arr, goal, starting) => {
   return arr.reduce((prev, curr) => {
-    let prevDist = getDistanceFromLatLonInKm(starting, prev);
-    let currDist = getDistanceFromLatLonInKm(starting, curr);
+    let prevDist = getDistanceFromLatLonInKm(starting, { lat: prev.lat(), lng: prev.lng() });
+    let currDist = getDistanceFromLatLonInKm(starting, { lat: curr.lat(), lng: curr.lng() });
     return (Math.abs(currDist - goal) < Math.abs(prevDist - goal) ? curr : prev);
   })
 }
